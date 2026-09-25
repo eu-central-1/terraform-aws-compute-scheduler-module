@@ -1,6 +1,7 @@
 variable "name_prefix" {
   description = "The name prefix of the lambda function"
   type        = string
+  nullable    = false
 }
 
 variable "create" {
