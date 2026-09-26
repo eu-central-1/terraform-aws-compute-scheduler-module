@@ -1,10 +1,12 @@
 variable "name_prefix" {
-  type    = string
-  default = null
+  description = "The name prefix of scheduler resources"
+  type     = string
+  default  = "scheduler"
+  nullable = false
 
   validation {
-    condition     = var.name_prefix == null || can(regex("^[a-z0-9]{3,}$", var.name_prefix))
-    error_message = "The name_prefix value must be null or have at least 3 lowercase letters and/or digits"
+    condition     = can(regex("^[a-z0-9]{3,}$", var.name_prefix))
+    error_message = "The name_prefix value must have at least 3 lowercase letters and/or digits"
   }
 }
 

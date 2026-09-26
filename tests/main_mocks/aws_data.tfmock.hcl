@@ -18,22 +18,39 @@ mock_data "aws_region" {
 }
 
 ##############################################
-# root module
+# lambda module
 ##############################################
-# override_data {
-#   target = data.aws_iam_policy_document.enhanced_monitoring
-#   values = {
-#   json = <<EOF
-#     {
-#       "Version": "2012-10-17",
-#       "Statement": {
-#         "Effect": "Allow",
-#         "Action": [
-#           "logs:*"
-#         ],
-#         "Resource": "*"
-#       }
-#     }
-#     EOF
-#   }
-# }
+override_data {
+  target = module.lambda.module.function.data.aws_iam_policy_document.assume_role
+    values = {
+      json = <<EOF
+            {
+              "Version": "2012-10-17",
+              "Statement": {
+                "Effect": "Allow",
+                "Principal": {
+                  "Service": "lambda.amazonaws.com"
+                },
+                "Action": "sts:AssumeRole"
+              }
+            }
+            EOF
+  }
+}
+override_data {
+  target = module.lambda.module.function.data.aws_iam_policy_document.additional_inline
+    values = {
+      json = <<EOF
+            {
+              "Version": "2012-10-17",
+              "Statement": {
+                "Effect": "Allow",
+                "Action": [
+                  "ec2:*"
+                ],
+                "Resource": "*"
+              }
+            }
+            EOF
+  }
+}

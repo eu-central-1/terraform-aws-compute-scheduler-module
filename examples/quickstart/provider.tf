@@ -18,7 +18,7 @@ provider "aws" {
     tags = {
       Environment = "Quickstart Example"
       Owner       = "Terraform Iac"
-      Project     = "terraform-aws-compure-fmm-module"
+      Project     = "terraform-aws-compute-scheduler-module"
       terraform   = "true"
     }
   }
